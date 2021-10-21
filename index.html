@@ -5,16 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/style.css">
-    <script src="scripts/script.js"></script>
+    <script src="scripts/script.js" defer></script>
     <title>To-Do</title>
 </head>
 <body>
     <div class="side-bar">
-        <button class="add-group">Add Group</button>
+        <button id="add-group-button" disabled>Add Group</button>
+        <ul class="groups">
+
+        </ul>
     </div>
     <div class="content">
-        <ul class="todo-list">
-            
+        <ul id="todo-list">
+
         </ul>
     </div>
 </body>
