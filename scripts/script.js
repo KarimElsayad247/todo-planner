@@ -21,7 +21,8 @@ function populateTasks() {
         // create a list item that will contain task
         const listItem = document.createElement('li');
         listItem.classList.add("task");
-        
+        listItem.tabIndex = 0;
+
         const taskID = `group-${currentGroupId}-task-${i}`;
 
         const label = document.createElement('label');
@@ -33,6 +34,7 @@ function populateTasks() {
         input.type = "checkbox";
         input.id = taskID;
         input.name = taskID;
+        input.tabIndex = -1;
 
         if (task.status === "finished") {
             input.setAttribute("checked");
@@ -49,9 +51,19 @@ function populateTasks() {
         // function is run
         deleteBtn.onclick = deleteTask;
         
-        listItem.appendChild(input);
-        listItem.appendChild(label);
-        listItem.appendChild(deleteBtn);
+        // Divs for styling puposes
+        let leftHand = document.createElement('div')
+        leftHand.classList.add("task-left-side");
+
+        let rightHand = document.createElement('div')
+        rightHand.classList.add("task-right-side");
+
+
+        leftHand.appendChild(input);
+        leftHand.appendChild(label);
+        rightHand.appendChild(deleteBtn);
+        listItem.appendChild(leftHand);
+        listItem.appendChild(rightHand);
         listItem.addEventListener('click', selectTask);
         
         tasksList.appendChild(listItem);
@@ -235,7 +247,7 @@ function addTask() {
         alert("You must select a group");
         return -1;
     }
-    
+
     let taskText = prompt("Task:");
 
     if (taskText === null) {
@@ -328,10 +340,10 @@ window.onload = () =>  {
 }
 
 function handleShortcuts(e) {
-    if (e.key == "a") {
+    if (e.key == "A") {
         addGroup();
     }
-    else if (e.key == "t") {
+    else if (e.key == "a") {
         addTask();
     }
     else if (e.key == "d") {
@@ -340,6 +352,18 @@ function handleShortcuts(e) {
         if (active.classList.contains("group")) {
             let delButton = active.querySelector(".delete-btn");
             delButton.focus();
+        }
+    }
+    else if (e.key == "g") {
+        first = groupsList.firstChild;
+        if (first != null) {
+            first.focus();
+        }
+    }
+    else if (e.key == "t") {
+        first = tasksList.firstChild;
+        if (first != null) {
+            first.focus();
         }
     }
     else if (e.key == "Enter") {
