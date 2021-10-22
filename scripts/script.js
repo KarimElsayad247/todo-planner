@@ -379,6 +379,10 @@ function handleShortcuts(e) {
             let delButton = active.querySelector(".delete-btn");
             delButton.focus();
         }
+        else if (active.classList.contains("task")) {
+            let delButton = active.querySelector(".delete-btn");
+            delButton.focus();
+        }
     }
     else if (e.key == "g") {
         first = groupsList.firstElementChild;
