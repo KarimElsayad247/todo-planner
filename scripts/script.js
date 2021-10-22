@@ -22,6 +22,7 @@ function populateTasks() {
         const listItem = document.createElement('li');
         listItem.classList.add("task");
         listItem.tabIndex = 0;
+        listItem.setAttribute("task-index", i);
 
         const taskID = `group-${currentGroupId}-task-${i}`;
 
@@ -78,6 +79,8 @@ function populateTasks() {
         listItem.addEventListener('click', selectTask);
         
         tasksList.appendChild(listItem);
+
+        i++;
     });
 }
 
@@ -347,7 +350,7 @@ window.onload = () =>  {
     addTaskButton.addEventListener('click', addTask);
     addGroupButton.removeAttribute('disabled');
     addTaskButton.removeAttribute('disabled');
-    document.addEventListener('keypress', handleShortcuts);
+    document.addEventListener('keydown', handleShortcuts);
 }
 
 function handleShortcuts(e) {
@@ -378,14 +381,31 @@ function handleShortcuts(e) {
         }
     }
     else if (e.key == "Enter") {
-        let active = document.activeElement;
+        const active = document.activeElement;
         if (active.classList.contains("group")) {
             let event = {target: active};
             selectGroup(event);
+        }
+    }
+    else if (e.key == " ") {
+        const active = document.activeElement;
+        if (active.classList.contains("task")) {
+            active.querySelector("input").click();
+        }
+    }
+    else if (e.key == "ArrowDown" || e.key == "j") {
+        let active = document.activeElement;
+        if (active.nextElementSibling) {
+            active.nextElementSibling.focus();
+        }
+    }
+    else if (e.key == "ArrowUp" || e.key == "k") {
+        let active = document.activeElement;
+        if (active.previousElementSibling) {
+            active.previousElementSibling.focus();
         }
     }
     else {
         console.log(e);
     }
 }
-
