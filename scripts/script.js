@@ -193,8 +193,36 @@ function addTask() {
     // add new task to global data object
     data[currentGroupId].tasks.push(newTask);
 
+    // update the DB to reflect addition of new task
+    updateTasksInDB();
+
 }
 
+function updateTasksInDB() {
+    
+    // create item that will be put in database
+    const newItem = {
+        group: data[currentGroupId].name,
+        tasks: data[currentGroupId].tasks,
+        id: currentGroupId
+    }
+
+    // open up a transaction 
+    const transaction = db.transaction(['TodoApp_os'], "readwrite");
+
+    // call the object store that's already added to the database
+    const os = transaction.objectStore('TodoApp_os');
+
+    // create a put request to update associated group
+    const updateTasksRequest = os.put(newItem);
+
+    updateTasksRequest.onsuccess = () => console.log("Updated tasks in database successfully");
+
+    updateTasksRequest.onerror = (e) => {
+        console.log("Error updating tasks in database");
+        console.log(e);
+    } 
+}
 
 // store the database object
 let db;
