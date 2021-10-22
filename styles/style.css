@@ -25,7 +25,7 @@ button {
     width: 15em;
     background-color: antiquewhite;
     padding: 10px 20px;
-    flex: 0 1 auto;
+    flex: 0 0 auto;
 }
 
 .group {
@@ -38,9 +38,13 @@ button {
     border-radius: 5px;
 }
 
-.group:focus {
+.group-selected {
     background-color: white;
     box-shadow: 0 0 3px black;
+}
+
+.group:focus-visible {
+    outline: 3px solid red;
 }
 
 .tool-bar {
