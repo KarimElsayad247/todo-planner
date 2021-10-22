@@ -253,6 +253,18 @@ function deleteTask(e) {
 
     // We don't want to select a task that's being deleted 
     e.stopPropagation();
+
+    // get the task index attribute from parent list item
+    let taskIndex = e.target.closest('li').getAttribute("task-index");
+
+    // remove task from array
+    data[currentGroupId].tasks.splice(taskIndex, 1);
+
+    populateTasks();
+
+    updateTasksInDB();
+
+
 }
 
 function addTask() {
