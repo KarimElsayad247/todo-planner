@@ -398,11 +398,17 @@ function handleShortcuts(e) {
         if (active.nextElementSibling) {
             active.nextElementSibling.focus();
         }
+        else {
+            active.parentElement.firstElementChild.focus();
+        }
     }
     else if (e.key == "ArrowUp" || e.key == "k") {
         let active = document.activeElement;
         if (active.previousElementSibling) {
             active.previousElementSibling.focus();
+        }
+        else {
+            active.parentElement.lastElementChild.focus();
         }
     }
     else {
