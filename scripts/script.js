@@ -35,9 +35,20 @@ function populateTasks() {
         input.id = taskID;
         input.name = taskID;
         input.tabIndex = -1;
+        input.addEventListener('change', (e) => {
+            listItem.classList.toggle("finished");
+            if (e.target.checked) {
+                task.status = "finished";
+            }
+            else {
+                task.status = "unfinished";
+            }
+            updateTasksInDB();
+        });
 
         if (task.status === "finished") {
-            input.setAttribute("checked");
+            input.setAttribute("checked", "");
+            listItem.classList.add("finished");
         }
 
         // Create a button and place it inside each listItem
@@ -84,11 +95,11 @@ function selectGroup(e) {
 
     // case when site is loaded and no group selected initially
     if (currentSelectedGroup != null) {
-        currentSelectedGroup.classList.toggle("group-selected")
+        currentSelectedGroup.classList.toggle("selected");
     }
     currentGroupId = group.getAttribute('data-group-id');
     currentSelectedGroup = group;
-    currentSelectedGroup.classList.toggle("group-selected");
+    currentSelectedGroup.classList.toggle("selected");
 
     // update visible tasks to reflect selected group
     populateTasks();

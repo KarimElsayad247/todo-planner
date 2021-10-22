@@ -46,7 +46,7 @@ button {
     border-radius: 5px;
 }
 
-.group-selected {
+.group.selected {
     background-color: white;
     box-shadow: 0 0 3px black;
 }
@@ -59,10 +59,31 @@ button {
 .tool-bar {
     padding: 10px 20px;
     border-bottom: black solid 2px;
+    display: flex;
+}
+
+#tasks-tool-bar {
+    justify-content: flex-end;
 }
 
 .content {
     display: flex;    
     flex-direction: column;
     width: 100%;
+}
+
+.task-left-side {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    gap: 20px;
+}
+
+.task.finished {
+    background-color: rgb(63, 199, 102);
+    /* color: white; */
+}
+
+.task.failed {
+
 }
