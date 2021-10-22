@@ -3,7 +3,9 @@ let addTaskButton = document.querySelector("#add-task-button");
 let groupsList = document.querySelector(".groups");
 let tasksList = document.querySelector("#todo-list");
 
-let activeGroup;
+let currentGroupId;
+
+let data = {};
 
 function populateTask() {
 
@@ -32,7 +34,7 @@ function createAndAppendGroupListItem(cursor) {
     listItem.appendChild(deleteBtn);
 
     listItem.addEventListener('focus', () => {
-        console.log(`focused ${listItem.textContent} with id = ${listItem.getAttribute('data-group-id')}`);
+        currentGroupId = listItem.getAttribute('data-group-id');
     })
 
     // Set an event handler so that when the button is clicked, the deleteItem()
@@ -57,7 +59,9 @@ function processData() {
     
         // If there is still another data item to iterate through, keep running this code
         if(cursor) {
-
+            
+            data[cursor.value.id] = cursor.value.tasks;
+            
             createAndAppendGroupListItem(cursor);
             
             // Iterate to the next item in the cursor
@@ -92,6 +96,7 @@ function deleteGroup(e) {
         // delete the parent of the button
         // which is the list item, so it is no longer displayed
         e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        delete data[groupId];
         console.log('Group ' + groupId + ' deleted.');
 
         // Again, if list item is empty, display a 'No groups stored' message
@@ -116,7 +121,7 @@ function addGroup() {
     groupsList.appendChild(group);
 
     // add item to db
-    let newItem = {group: groupName, tasks: 'none'};
+    let newItem = {group: groupName, tasks: []};
     
     // open a read/write db transaction, ready for adding the data
     let transaction = db.transaction(['TodoApp_os'], 'readwrite');
