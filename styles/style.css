@@ -24,11 +24,19 @@ button {
 .side-bar {
     width: 15em;
     background-color: antiquewhite;
-    padding: 10px 20px;
+    border-right: black solid 2px;
     flex: 0 0 auto;
 }
 
-.group {
+.groups {
+    padding: 10px 20px;
+}
+
+#todo-list {
+    padding: 0px 20px;
+}
+
+.group, .task {
     display: flex;
     justify-content: space-between;
     margin-top: 1em;
