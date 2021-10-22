@@ -15,6 +15,12 @@ function populateTasks() {
         tasksList.removeChild(tasksList.firstChild);
     }
     
+    if (data[currentGroupId].tasks.length === 0) {
+        const listItem = document.createElement('li');
+        listItem.textContent = 'No Tasks';
+        tasksList.appendChild(listItem);
+    }
+
     let i = 0;
     data[currentGroupId].tasks.forEach(task => {
         
@@ -381,7 +387,7 @@ function handleShortcuts(e) {
         }
         else if (active.classList.contains("task")) {
             let delButton = active.querySelector(".delete-btn");
-            delButton.focus();
+            delButton.focus();ddd   
         }
     }
     else if (e.key == "g") {
