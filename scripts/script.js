@@ -4,11 +4,33 @@ let groupsList = document.querySelector(".groups");
 let tasksList = document.querySelector("#todo-list");
 
 let currentGroupId;
+let currentSelectedGroup;
 
 let data = {};
 
 function populateTask() {
+    // first, remove all tasks visible
+    while (tasksList.firstChild) {
+        tasksList.removeChild(tasksList.firstChild);
+    }
+}
 
+function selectGroup(e) {
+    let group = e.target;
+
+    // do nothing if we're selecting currently selected group
+    if (currentSelectedGroup === group) {
+        return;
+    }
+
+    // case when site is loaded and no group selected initially
+    if (currentSelectedGroup != null) {
+        currentSelectedGroup.classList.toggle("group-selected")
+    }
+    currentGroupId = group.getAttribute('data-group-id');
+    currentSelectedGroup = group;
+    currentSelectedGroup.classList.toggle("group-selected");
+    console.log("focusing", currentGroupId);
 }
 
 function createAndAppendGroupListItem(cursor) {
@@ -33,13 +55,15 @@ function createAndAppendGroupListItem(cursor) {
     deleteBtn.tabIndex = -1; // I only want to focus on button by shortcut
     listItem.appendChild(deleteBtn);
 
-    listItem.addEventListener('focus', () => {
-        currentGroupId = listItem.getAttribute('data-group-id');
-    })
+    listItem.addEventListener('click', selectGroup);
 
     // Set an event handler so that when the button is clicked, the deleteItem()
     // function is run
     deleteBtn.onclick = deleteGroup;
+}
+
+function createAndAppendTaksListItem() {
+
 }
 
 function processData() {
@@ -60,7 +84,10 @@ function processData() {
         // If there is still another data item to iterate through, keep running this code
         if(cursor) {
             
-            data[cursor.value.id] = cursor.value.tasks;
+            data[cursor.value.id] = {
+                name: cursor.value.group,
+                tasks: cursor.value.tasks
+            };
             
             createAndAppendGroupListItem(cursor);
             
@@ -116,10 +143,6 @@ function addGroup() {
         return;
     }
 
-    let group = document.createElement("li");
-    group.textContent = groupName;
-    groupsList.appendChild(group);
-
     // add item to db
     let newItem = {group: groupName, tasks: []};
     
@@ -145,6 +168,32 @@ function addGroup() {
     };
 }
 
+function deleteTask() {
+
+}
+
+function addTask() {
+
+    if (currentGroupId == null) {
+        alert("You must select a group");
+        return -1;
+    }
+
+    let taskText = prompt("Task:");
+
+    if (taskText === null) {
+        return;
+    }
+
+    let newTask = {
+        text: taskText,
+        status: "unfinished"
+    };
+
+    // add new task to global data object
+    data[currentGroupId].tasks.push(newTask);
+
+}
 
 
 // store the database object
@@ -184,6 +233,7 @@ window.onload = () =>  {
     };
     
     addGroupButton.addEventListener('click', addGroup);
+    addTaskButton.addEventListener('click', addTask);
     addGroupButton.removeAttribute('disabled');
     addTaskButton.removeAttribute('disabled');
     document.addEventListener('keypress', handleShortcuts);
@@ -193,6 +243,9 @@ function handleShortcuts(e) {
     if (e.key == "a") {
         addGroup();
     }
+    else if (e.key == "t") {
+        addTask();
+    }
     else if (e.key == "d") {
         // select delete button if focus on group
         let active = document.activeElement;
@@ -200,6 +253,16 @@ function handleShortcuts(e) {
             let delButton = active.querySelector(".delete-btn");
             delButton.focus();
         }
+    }
+    else if (e.key == "Enter") {
+        let active = document.activeElement;
+        if (active.classList.contains("group")) {
+            let event = {target: active};
+            selectGroup(event);
+        }
+    }
+    else {
+        console.log(e);
     }
 }
 
