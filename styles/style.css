@@ -43,12 +43,14 @@ button {
     box-shadow: 0 0 3px black;
 }
 
-.group:focus-visible {
-    outline: 3px solid red;
+*:focus-visible {
+    outline: 3px solid rgb(9, 127, 227, 0.5);
+    border-color: rgb(7, 84, 151);
 }
 
 .tool-bar {
     padding: 10px 20px;
+    border-bottom: black solid 2px;
 }
 
 .content {
