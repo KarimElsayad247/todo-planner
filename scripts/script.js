@@ -355,13 +355,13 @@ function handleShortcuts(e) {
         }
     }
     else if (e.key == "g") {
-        first = groupsList.firstChild;
+        first = groupsList.firstElementChild;
         if (first != null) {
             first.focus();
         }
     }
     else if (e.key == "t") {
-        first = tasksList.firstChild;
+        first = tasksList.firstElementChild;
         if (first != null) {
             first.focus();
         }
