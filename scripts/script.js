@@ -15,6 +15,7 @@ function populateTasks() {
         tasksList.removeChild(tasksList.firstChild);
     }
     
+    // unique message when there are no tasks
     if (data[currentGroupId].tasks.length === 0) {
         const listItem = document.createElement('li');
         listItem.textContent = 'No Tasks';
@@ -371,14 +372,24 @@ window.onload = () =>  {
     document.addEventListener('keydown', handleShortcuts);
 }
 
+let ADD_GROUP_KEY = "A";
+let ADD_TASK_KEY = "a";
+let FOCUS_DELETE = "d";
+let FOCUS_GROUPS = "g";
+let FOCUS_TASKS = "t";
+let SELECT = "Enter";
+let CHECK = " ";
+let LIST_DOWN = "j";
+let LIST_UP = "k";
+
 function handleShortcuts(e) {
-    if (e.key == "A") {
+    if (e.key == ADD_GROUP_KEY) {
         addGroup();
     }
-    else if (e.key == "a") {
+    else if (e.key == ADD_TASK_KEY) {
         addTask();
     }
-    else if (e.key == "d") {
+    else if (e.key == FOCUS_DELETE) {
         // select delete button if focus on group
         let active = document.activeElement;
         if (active.classList.contains("group")) {
@@ -387,35 +398,35 @@ function handleShortcuts(e) {
         }
         else if (active.classList.contains("task")) {
             let delButton = active.querySelector(".delete-btn");
-            delButton.focus();ddd   
+            delButton.focus();   
         }
     }
-    else if (e.key == "g") {
+    else if (e.key == FOCUS_GROUPS) {
         first = groupsList.firstElementChild;
         if (first != null) {
             first.focus();
         }
     }
-    else if (e.key == "t") {
+    else if (e.key == FOCUS_TASKS) {
         first = tasksList.firstElementChild;
         if (first != null) {
             first.focus();
         }
     }
-    else if (e.key == "Enter") {
+    else if (e.key == SELECT) {
         const active = document.activeElement;
         if (active.classList.contains("group")) {
             let event = {target: active};
             selectGroup(event);
         }
     }
-    else if (e.key == " ") {
+    else if (e.key == CHECK) {
         const active = document.activeElement;
         if (active.classList.contains("task")) {
             active.querySelector("input").click();
         }
     }
-    else if (e.key == "ArrowDown" || e.key == "j") {
+    else if (e.key == "ArrowDown" || e.key == LIST_DOWN) {
         let active = document.activeElement;
         if (active.nextElementSibling) {
             active.nextElementSibling.focus();
@@ -424,7 +435,7 @@ function handleShortcuts(e) {
             active.parentElement.firstElementChild.focus();
         }
     }
-    else if (e.key == "ArrowUp" || e.key == "k") {
+    else if (e.key == "ArrowUp" || e.key == LIST_UP) {
         let active = document.activeElement;
         if (active.previousElementSibling) {
             active.previousElementSibling.focus();
