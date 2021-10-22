@@ -8,11 +8,58 @@ let currentSelectedGroup;
 
 let data = {};
 
-function populateTask() {
+function populateTasks() {
+
     // first, remove all tasks visible
     while (tasksList.firstChild) {
         tasksList.removeChild(tasksList.firstChild);
     }
+    
+    let i = 0;
+    data[currentGroupId].tasks.forEach(task => {
+        
+        // create a list item that will contain task
+        const listItem = document.createElement('li');
+        listItem.classList.add("task");
+        
+        const taskID = `group-${currentGroupId}-task-${i}`;
+
+        const label = document.createElement('label');
+        label.for = taskID;
+        label.name = taskID;
+        label.textContent = task.text;
+
+        const input = document.createElement('input');
+        input.type = "checkbox";
+        input.id = taskID;
+        input.name = taskID;
+
+        if (task.status === "finished") {
+            input.setAttribute("checked");
+        }
+
+        // Create a button and place it inside each listItem
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add("delete-btn");
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.tabIndex = -1; // I only want to focus on button by shortcut
+        
+        
+        // Set an event handler so that when the button is clicked, the deleteItem()
+        // function is run
+        deleteBtn.onclick = deleteTask;
+        
+        listItem.appendChild(input);
+        listItem.appendChild(label);
+        listItem.appendChild(deleteBtn);
+        listItem.addEventListener('click', selectTask);
+        
+        tasksList.appendChild(listItem);
+    });
+}
+
+function selectTask(e) {
+    let task = e.target;
 }
 
 function selectGroup(e) {
@@ -30,6 +77,10 @@ function selectGroup(e) {
     currentGroupId = group.getAttribute('data-group-id');
     currentSelectedGroup = group;
     currentSelectedGroup.classList.toggle("group-selected");
+
+    // update visible tasks to reflect selected group
+    populateTasks();
+
     console.log("focusing", currentGroupId);
 }
 
@@ -108,6 +159,10 @@ function processData() {
 }
 
 function deleteGroup(e) {
+
+    // We don't want to select a group that's being deleted 
+    e.stopPropagation();
+
     // retrieve the name of the group we want to delete. We need
     // to convert it to a number before trying it use it with IDB; IDB key
     // values are type-sensitive.
@@ -168,8 +223,10 @@ function addGroup() {
     };
 }
 
-function deleteTask() {
+function deleteTask(e) {
 
+    // We don't want to select a task that's being deleted 
+    e.stopPropagation();
 }
 
 function addTask() {
@@ -178,7 +235,7 @@ function addTask() {
         alert("You must select a group");
         return -1;
     }
-
+    
     let taskText = prompt("Task:");
 
     if (taskText === null) {
@@ -195,6 +252,9 @@ function addTask() {
 
     // update the DB to reflect addition of new task
     updateTasksInDB();
+
+    // update tasks list to reflect newly added task
+    populateTasks();
 
 }
 
