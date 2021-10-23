@@ -11,19 +11,25 @@ li {
 body {
     display: flex;
     height: 100vh;
+    background-color: #FCFCFC;
 }
 
 button {
-    /* background-color: white; */
+    background-color: #440381   ;
+    color: white;
     padding: 2px 5px;
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
 }
 
+button:hover, button:focus-visible {
+    background-color: #54049F;
+}
+
 .side-bar {
     width: 15em;
-    background-color: antiquewhite;
+    background-color: #ffedeb;
     border-right: black solid 2px;
     flex: 0 0 auto;
 }
@@ -47,7 +53,7 @@ button {
 }
 
 .group.selected {
-    background-color: white;
+    background-color: #FCFCFC;
     box-shadow: 0 0 3px black;
 }
 
@@ -80,10 +86,16 @@ button {
 }
 
 .task.finished {
-    background-color: rgb(63, 199, 102);
-    /* color: white; */
+    background-color: #2DF06E;
+    /* color: whi   te; */
 }
 
 .task.failed {
 
+}
+
+@media (max-width: 500px) {
+    .side-bar {
+        
+    }
 }
