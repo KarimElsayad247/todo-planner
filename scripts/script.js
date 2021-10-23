@@ -395,6 +395,7 @@ let SELECT = "Enter";
 let CHECK = " ";
 let LIST_DOWN = "j";
 let LIST_UP = "k";
+let TOGGLE_SIDEBAR = "e";
 
 function handleShortcuts(e) {
     if (e.key == ADD_GROUP_KEY) {
@@ -426,6 +427,10 @@ function handleShortcuts(e) {
         if (first != null) {
             first.focus();
         }
+    }
+    else if (e.key == TOGGLE_SIDEBAR) {
+        let sidebar = document.querySelector(".side-bar");
+        sidebar.classList.toggle("hidden"); 
     }
     else if (e.key == SELECT) {
         const active = document.activeElement;

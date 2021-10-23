@@ -88,6 +88,10 @@ button:hover, button:focus-visible   {
     width: 100%;
 }
 
+.task {
+    background-color: #FFF;
+}
+
 .task-left-side {
     display: flex;
     align-items: center;
@@ -121,8 +125,10 @@ button:hover, button:focus-visible   {
 
 }
 
+.side-bar.hidden {
+    display: none;
+}
+
 @media (max-width: 500px) {
-    .side-bar {
-        
-    }
+
 }
