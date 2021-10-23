@@ -11,26 +11,27 @@ li {
 body {
     display: flex;
     height: 100vh;
-    background-color: #FCFCFC;
+    background-color: #FFF2EB;
 }
 
 button {
-    background-color: #440381   ;
+    background-color: #27547C   ;
     color: white;
-    padding: 2px 5px;
+    padding: 4px 8px;
     border-radius: 5px;
     border-style: solid;
+    border-color: #000;
     border-width: 1px;
 }
 
-button:hover, button:focus-visible {
-    background-color: #54049F;
+button:hover, button:focus-visible   {
+    background-color: #3772A9;
 }
 
 .side-bar {
     width: 15em;
-    background-color: #ffedeb;
-    border-right: black solid 2px;
+    background-color: #FFD7C2;
+    box-shadow: 0px 0px 8px ;
     flex: 0 0 auto;
 }
 
@@ -45,6 +46,7 @@ button:hover, button:focus-visible {
 .group, .task {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     margin-top: 1em;
     padding: 5px 5px;
     border-style: solid;
@@ -52,20 +54,28 @@ button:hover, button:focus-visible {
     border-radius: 5px;
 }
 
+.group {
+    background-color: #FFF2EB;
+}
+
 .group.selected {
     background-color: #FCFCFC;
     box-shadow: 0 0 3px black;
 }
 
-*:focus-visible {
+*:focus-visible, .group:hover {
     outline: 3px solid rgb(9, 127, 227, 0.5);
     border-color: rgb(7, 84, 151);
 }
 
+
 .tool-bar {
     padding: 10px 20px;
-    border-bottom: black solid 2px;
     display: flex;
+}
+
+#groups-tool-bar {
+    border-bottom: 2px solid black;
 }
 
 #tasks-tool-bar {
@@ -85,8 +95,25 @@ button:hover, button:focus-visible {
     gap: 20px;
 }
 
+.task-right-side {
+    display: flex;
+    align-items: center;
+}
+
+.task label {
+    padding: 4px 10px;
+    background-color: white;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.task label:hover {
+    background-color: #eee;
+}
+
 .task.finished {
-    background-color: #2DF06E;
+    background-color: #0FD250;
     /* color: whi   te; */
 }
 
