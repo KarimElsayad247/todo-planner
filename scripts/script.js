@@ -15,6 +15,10 @@ function populateTasks() {
         tasksList.removeChild(tasksList.firstChild);
     }
     
+    // display name of active group
+    let nameBox = document.querySelector("#active-group-name");
+    nameBox.textContent = data[currentGroupId].name; 
+
     // unique message when there are no tasks
     if (data[currentGroupId].tasks.length === 0) {
         const listItem = document.createElement('li');
