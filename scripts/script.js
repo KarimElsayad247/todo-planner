@@ -196,6 +196,13 @@ function deleteGroup(e) {
     // We don't want to select a group that's being deleted 
     e.stopPropagation();
 
+    // confirm if user wants to delete
+    let check = confirm("Are you sure you want to delete this group?");
+
+    if (check == false) {
+        return;
+    }
+
     // retrieve the name of the group we want to delete. We need
     // to convert it to a number before trying it use it with IDB; IDB key
     // values are type-sensitive.
@@ -260,6 +267,13 @@ function deleteTask(e) {
 
     // We don't want to select a task that's being deleted 
     e.stopPropagation();
+
+    // confirm if user wants to delete
+    let check = confirm("Are you sure you want to delete this task?");
+    
+    if (check == false) {
+        return;
+    }
 
     // get the task index attribute from parent list item
     let taskIndex = e.target.closest('li').getAttribute("task-index");
