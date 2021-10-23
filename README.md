@@ -9,6 +9,8 @@ It also doubles as good IndexedDB practice.
 ### Currently
 
 * Subtasks (and subtasks for the subtasks!)
+  * Indent level for each level
+  * selecting task collapses children
 
 * Responsive design for mobile 
 
