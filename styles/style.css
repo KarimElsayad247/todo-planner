@@ -39,16 +39,12 @@ button:hover, button:focus-visible   {
     padding: 10px 20px;
 }
 
-#todo-list {
-    padding: 10px 20px;
-}
-
 .group, .task {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 1em;
-    padding: 5px 5px;
+    padding: 5px 15px;
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
@@ -70,12 +66,13 @@ button:hover, button:focus-visible   {
 
 
 .tool-bar {
-    padding: 10px 20px;
+    padding: 10px 0px;
     display: flex;
 }
 
 #groups-tool-bar {
     border-bottom: 2px solid black;
+    padding-left: 20px;
 }
 
 #tasks-tool-bar {
@@ -86,6 +83,7 @@ button:hover, button:focus-visible   {
     display: flex;    
     flex-direction: column;
     width: 100%;
+    padding: 0 80px;
 }
 
 .task {
