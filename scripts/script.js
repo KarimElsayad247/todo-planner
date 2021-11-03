@@ -441,13 +441,19 @@ function handleShortcuts(e) {
         }
     }
     else if (e.key == FOCUS_GROUPS) {
-        first = groupsList.firstElementChild;
-        if (first != null) {
-            first.focus();
+        let currentGroupElement = document.querySelector(`[data-group-id="${currentGroupId}"]`)
+        if (currentGroupElement) {
+            currentGroupElement.focus()
+        }
+        else {
+            let first = groupsList.firstElementChild;
+            if (first != null) {
+                first.focus();
+            }
         }
     }
     else if (e.key == FOCUS_TASKS) {
-        first = tasksList.firstElementChild;
+        let first = tasksList.firstElementChild;
         if (first != null) {
             first.focus();
         }
