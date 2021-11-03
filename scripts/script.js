@@ -161,6 +161,8 @@ function processData() {
         groupsList.removeChild(groupsList.firstChild);
     }
 
+    data = {};
+
     // Open our object store and then get a cursor - which iterates through all the
     // different data items in the store
     let objectStore = db.transaction('TodoApp_os').objectStore('TodoApp_os');
@@ -217,6 +219,14 @@ function deleteGroup(e) {
     let objectStore = transaction.objectStore('TodoApp_os');
     let request = objectStore.delete(groupId);
 
+    request.onsuccess = () => {
+        console.log("Delete Request with id" + groupId + " success");
+    }
+
+    request.onerror = e => {
+        console.log(e);
+    }
+
     // report that the data item has been deleted
     transaction.oncomplete = function() {
         // delete the parent of the button
@@ -232,6 +242,11 @@ function deleteGroup(e) {
             groupsList.appendChild(listItem);
         }
     };
+
+    // report if there was an error in transaction
+    transaction.onerror = e => {
+        console.log(e);
+    }
 }
 
 function addGroup() {
