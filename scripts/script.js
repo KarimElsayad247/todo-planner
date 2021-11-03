@@ -217,7 +217,7 @@ function deleteGroup(e) {
     // open a database transaction and delete the group, finding it using the id we retrieved above
     let transaction = db.transaction(['TodoApp_os'], 'readwrite');
     let objectStore = transaction.objectStore('TodoApp_os');
-    let request = objectStore.delete(groupId);
+    let request = objectStore.delete(Number(groupId));
 
     request.onsuccess = () => {
         console.log("Delete Request with id" + groupId + " success");
@@ -235,12 +235,7 @@ function deleteGroup(e) {
         delete data[groupId];
         console.log('Group ' + groupId + ' deleted.');
 
-        // Again, if list item is empty, display a 'No groups stored' message
-        if(!groupsList.firstChild) {
-            let listItem = document.createElement('li');
-            listItem.textContent = 'No Groups';
-            groupsList.appendChild(listItem);
-        }
+        processData();
     };
 
     // report if there was an error in transaction
@@ -346,7 +341,7 @@ function updateTasksInDB() {
     const newItem = {
         group: data[currentGroupId].name,
         tasks: data[currentGroupId].tasks,
-        id: currentGroupId
+        id: Number(currentGroupId)
     }
 
     // open up a transaction 
