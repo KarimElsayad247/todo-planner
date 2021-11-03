@@ -2,6 +2,7 @@
     padding: 0;
     margin: 0;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
 }
 
 li {
@@ -15,13 +16,19 @@ body {
 }
 
 button {
-    background-color: #27547C   ;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: #3182c9   ;
     color: white;
     padding: 8px 16px;
-    border-radius: 3px;
+    border-radius: 0px;
     border-style: solid;
     border-color: #000;
     border-width: 1px;
+}
+
+header button {
+    padding: 15px 16px;
 }
 
 button:hover, button:focus-visible   {
@@ -44,19 +51,23 @@ button:hover, button:focus-visible   {
 }
 
 .group, .task {
+    font-size: 1.2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 1em;
     padding: 15px 15px;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 3px;
+    border: 1px solid rgb(150, 145, 145);
+    border-radius: 0px;
     box-shadow: 0 0 16px rgba(100, 100, 100, 0.5);
 }
 
+#active-group-name {
+    font-size: 1.6rem;
+}
+
 .task.finished {
-    box-shadow: 0 0 16px rgba(100, 100, 100, 0.5), inset 0 0 30px rgba(150, 222, 150, 0.5);
+    background-color: rgba(150, 255, 150, 0.5);
 }
 
 .task.failed {
@@ -72,7 +83,7 @@ button:hover, button:focus-visible   {
     box-shadow: 0 0 3px black;
 }
 
-*:focus-visible, .group:hover {
+*:focus-visible, .group:hover, .task:hover {
     outline: 3px solid rgb(9, 127, 227, 0.5);
     border-color: rgb(7, 84, 151);
 }
@@ -117,7 +128,9 @@ button:hover, button:focus-visible   {
 
 .task label {
     padding: 4px 10px;
+    font-size: 1.2rem;
     background-color: white;
+    border: 1px solid rgb(150, 145, 145);
 }
 
 .task label:hover {
