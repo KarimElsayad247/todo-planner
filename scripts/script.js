@@ -238,7 +238,11 @@ function addGroup() {
     let groupName = prompt("Group name:");
 
     // if user clicks cancel, abort creation
-    if (groupName === null) {
+    if (groupName == null) {
+        return;
+    }
+    else if (groupName == "") {
+        alert("Group name can't be empty!");
         return;
     }
 
