@@ -12,7 +12,7 @@ li {
 body {
     display: flex;
     height: 100vh;
-    background-color: #FBFBFB;
+    background-color: #FFF;
 }
 
 button {
@@ -33,6 +33,7 @@ header button {
 
 button:hover, button:focus-visible   {
     background-color: #3772A9;
+    transition: background-color 0.05s;
 }
 
 .side-bar {
@@ -76,6 +77,13 @@ button:hover, button:focus-visible   {
 
 .group {
     background-color: #FCFCFC;
+    transition: box-shadow 0.2s;
+    transition: background-color 0.2s;
+}
+
+.task {
+    background-color: #FFF;
+    transition: background-color 0.1s;
 }
 
 .group.selected {
@@ -85,7 +93,7 @@ button:hover, button:focus-visible   {
 
 *:focus-visible, .group:hover, .task:hover {
     outline: 3px solid rgb(9, 127, 227, 0.5);
-    border-color: rgb(7, 84, 151);
+    border-color: rgb(9, 127, 227, 0.5);
 }
 
 
@@ -110,9 +118,6 @@ button:hover, button:focus-visible   {
     padding: 0 80px;
 }
 
-.task {
-    background-color: #FFF;
-}
 
 .task-left-side {
     display: flex;
