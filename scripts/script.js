@@ -450,7 +450,7 @@ let TOGGLE_SIDEBAR = "e";
 
 function handleShortcuts(e) {
 
-    if (!e.key.match(/[fF][0-9]{1,2}|Tab/)) {
+    if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
         e.preventDefault();
     }
 
