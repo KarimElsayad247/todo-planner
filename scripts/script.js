@@ -2,11 +2,37 @@ let addGroupButton = document.querySelector("#add-group-button");
 let addTaskButton = document.querySelector("#add-task-button");
 let groupsList = document.querySelector(".groups");
 let tasksList = document.querySelector("#todo-list");
+let saveDataButton = document.querySelector('#save-data-button')
 
 let currentGroupId;
 let currentSelectedGroup;
 
 let data = {};
+
+function exportJSON() {
+    let text = JSON.stringify(data);
+    alert(text);
+}
+
+function importJSON() {
+    jsonString = prompt("Enter JSON string");
+
+    // if user clicks cancel, abort creation
+    if (jsonString == null) {
+        return;
+    }
+    else if (jsonString == "") {
+        alert("Group name can't be empty!");
+        return;
+    }
+
+    try {
+        let object = JSON.parse(jsonString);
+        data = object;
+    } catch (e) {
+        alert("Invalid json object");
+    }
+}
 
 function populateTasks() {
 
@@ -407,6 +433,7 @@ window.onload = () =>  {
     addTaskButton.addEventListener('click', addTask);
     addGroupButton.removeAttribute('disabled');
     addTaskButton.removeAttribute('disabled');
+    saveDataButton.addEventListener('click', exportJSON);
     document.addEventListener('keydown', handleShortcuts);
 }
 
