@@ -449,6 +449,11 @@ let LIST_UP = "k";
 let TOGGLE_SIDEBAR = "e";
 
 function handleShortcuts(e) {
+
+    if (!e.key.match(/[fF][0-9]{1,2}|Tab/)) {
+        e.preventDefault();
+    }
+
     if (e.key == ADD_GROUP_KEY) {
         addGroup();
     }
