@@ -49,6 +49,7 @@ button:hover, button:focus-visible   {
 
 #todo-list {
     padding-top: 10px;
+    padding-bottom: 40px;
 }
 
 .group, .task {
