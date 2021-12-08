@@ -3,6 +3,9 @@ let addTaskButton = document.querySelector("#add-task-button");
 let groupsList = document.querySelector(".groups");
 let tasksList = document.querySelector("#todo-list");
 let saveDataButton = document.querySelector('#save-data-button')
+let exportModal = document.querySelector("#export-modal");
+let importModal = document.querySelector("#import-modal");
+let modalCloseButton = document.querySelectorAll(".modal-exit-button");
 
 let currentGroupId;
 let currentSelectedGroup;
@@ -10,8 +13,9 @@ let currentSelectedGroup;
 let data = {};
 
 function exportJSON() {
-    let text = JSON.stringify(data);
-    alert(text);
+    let dataText = JSON.stringify(data);
+    exportModal.querySelector(".text-content").textContent = dataText;
+    exportModal.style.display = "flex";
 }
 
 function importJSON() {
@@ -396,6 +400,10 @@ function updateTasksInDB() {
 // store the database object
 let db;
 
+function initModals() {
+
+}
+
 window.onload = () =>  {
     let request = window.indexedDB.open("TodoApp_db", 1);
     
@@ -435,6 +443,14 @@ window.onload = () =>  {
     addTaskButton.removeAttribute('disabled');
     saveDataButton.addEventListener('click', exportJSON);
     document.addEventListener('keydown', handleShortcuts);
+
+    modalCloseButton.forEach(button => {
+        button.onclick = e => {
+            // hide the modal by changin display prop to none
+            e.target.parentElement.parentElement.style.display = "none";
+        }
+    })
+
 }
 
 let ADD_GROUP_KEY = "A";
