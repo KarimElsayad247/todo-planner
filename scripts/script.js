@@ -12,7 +12,7 @@ let data = {};
 function exportJSON() {
     let text = JSON.stringify(data);
     alert(text);
-}
+}       
 
 function importJSON() {
     jsonString = prompt("Enter JSON string");
@@ -448,19 +448,32 @@ let LIST_DOWN = "j";
 let LIST_UP = "k";
 let TOGGLE_SIDEBAR = "e";
 
+let shortcuts = {
+    "ADD_GROUP_KEY": ADD_GROUP_KEY,
+    "ADD_TASK_KEY": ADD_TASK_KEY,
+    "FOCUS_DELETE": FOCUS_DELETE,
+    "FOCUS_GROUPS": FOCUS_GROUPS,
+    "FOCUS_TASKS": FOCUS_TASKS,
+    "SELECT": SELECT,
+    "CHECK": CHECK,
+    "LIST_DOWN": LIST_DOWN,
+    "LIST_UP": LIST_UP,
+    "TOGGLE_SIDEBAR": TOGGLE_SIDEBAR,
+}
+
 function handleShortcuts(e) {
 
     if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
         e.preventDefault();
     }
 
-    if (e.key == ADD_GROUP_KEY) {
+    if (e.key == shortcuts.ADD_GROUP_KEY) {
         addGroup();
     }
-    else if (e.key == ADD_TASK_KEY) {
+    else if (e.key == shortcuts.ADD_TASK_KEY) {
         addTask();
     }
-    else if (e.key == FOCUS_DELETE) {
+    else if (e.key == shortcuts.FOCUS_DELETE) {
         // select delete button if focus on group
         let active = document.activeElement;
         if (active.classList.contains("group")) {
@@ -472,7 +485,7 @@ function handleShortcuts(e) {
             delButton.focus();   
         }
     }
-    else if (e.key == FOCUS_GROUPS) {
+    else if (e.key == shortcuts.FOCUS_GROUPS) {
         let currentGroupElement = document.querySelector(`[data-group-id="${currentGroupId}"]`)
         if (currentGroupElement) {
             currentGroupElement.focus()
@@ -484,24 +497,24 @@ function handleShortcuts(e) {
             }
         }
     }
-    else if (e.key == FOCUS_TASKS) {
+    else if (e.key == shortcuts.FOCUS_TASKS) {
         let first = tasksList.firstElementChild;
         if (first != null) {
             first.focus();
         }
     }
-    else if (e.key == TOGGLE_SIDEBAR) {
+    else if (e.key == shortcuts.TOGGLE_SIDEBAR) {
         let sidebar = document.querySelector(".side-bar");
         sidebar.classList.toggle("hidden"); 
     }
-    else if (e.key == SELECT) {
+    else if (e.key == shortcuts.SELECT) {
         const active = document.activeElement;
         if (active.classList.contains("group")) {
             let event = {target: active};
             selectGroup(event);
         }
     }
-    else if (e.key == CHECK) {
+    else if (e.key == shortcuts.CHECK) {
         const active = document.activeElement;
         if (active.classList.contains("task")) {
             active.querySelector("input").click();
