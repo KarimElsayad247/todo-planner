@@ -12,7 +12,10 @@
     <div class="side-bar">
         <header class="tool-bar" id="groups-tool-bar">
             <dev class="header-left"><button id="add-group-button" disabled>Add Group</button></dev>
-            <div class="header-right"><button id="save-data-button">Save</button></div>
+            <div class="header-right">
+                <button id="save-data-button">Export</button>
+                <button id="load-data-button">Import</button>
+            </div>
         </header>
         <ul class="groups">
 
@@ -40,7 +43,9 @@
             <button class="modal-exit-button">Close</button>
         </div>
         <div class="modal-content">
-            <p class="text-content"></p>
+            <label for="data-input">Enter JSON text</label>
+            <input type="text" id="data-input" name="data-input">
+            <button id="import-json-text">Confirm</button>
         </div>
     </div>
 </body>

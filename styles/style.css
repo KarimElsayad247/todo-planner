@@ -157,6 +157,8 @@ button:hover, button:focus-visible   {
 
 .modal-content {
     padding: 1rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal .text-content {

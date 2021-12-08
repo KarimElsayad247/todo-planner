@@ -3,8 +3,10 @@ let addTaskButton = document.querySelector("#add-task-button");
 let groupsList = document.querySelector(".groups");
 let tasksList = document.querySelector("#todo-list");
 let saveDataButton = document.querySelector('#save-data-button')
+let loadDataButton = document.querySelector('#load-data-button');
 let exportModal = document.querySelector("#export-modal");
 let importModal = document.querySelector("#import-modal");
+let importConfirmButton = document.querySelector("#import-json-text");
 let modalCloseButton = document.querySelectorAll(".modal-exit-button");
 
 let currentGroupId;
@@ -18,15 +20,17 @@ function exportJSON() {
     exportModal.style.display = "flex";
 }
 
-function importJSON() {
-    jsonString = prompt("Enter JSON string");
+function importFromJSON() {
+    let jsonString = document.querySelector("#data-input").value;
+
+    console.log(jsonString)
 
     // if user clicks cancel, abort creation
     if (jsonString == null) {
         return;
     }
     else if (jsonString == "") {
-        alert("Group name can't be empty!");
+        alert("JSON string can't be empty!");
         return;
     }
 
@@ -35,7 +39,14 @@ function importJSON() {
         data = object;
     } catch (e) {
         alert("Invalid json object");
+        return;
     }
+    
+    clearAndFillDB();
+}
+
+function displayImportModal() {
+    importModal.style.display = "flex";
 }
 
 function populateTasks() {
@@ -317,6 +328,60 @@ function addGroup() {
     };
 }
 
+function clearAndFillDB() {
+    // open a read/write db transaction
+    let transaction = db.transaction(['TodoApp_os'], 'readwrite');
+
+    // call an object store that's already been added to the database
+    let os = transaction.objectStore('TodoApp_os');
+
+    // Make a request to the object store
+    let request = os.clear();
+
+    // Report on the success of the transaction completing, when everything is done
+    transaction.oncomplete = function() {
+        console.log('Object Store Cleared');
+        fillDataBaseFromDataObject();
+    };
+
+    transaction.onerror = function() {
+        console.log('Transaction not opened due to error');
+    };
+}
+
+function fillDataBaseFromDataObject() {
+    let id = 1;
+    for (const groupID in data) {
+        let group = data[groupID];
+        
+        // create item that will be put in database;
+        const newItem = {
+            group: group.name,
+            tasks: group.tasks,
+            id: id 
+        };
+
+        
+        // open up a transaction;
+        const transaction = db.transaction(['TodoApp_os'], "readwrite");
+        
+        // call the object store that's already added to the database
+        const os = transaction.objectStore('TodoApp_os');
+        
+        // create a put new item
+        const request = os.put(newItem);
+        
+        request.onsuccess = () => console.log(`Group {id} imported`);
+        
+        request.onerror = (e) => {
+            console.log(`Error importing Group {id}: {group.name}`);
+            console.log(e);
+        };
+        id = id + 1;
+    }
+    processData();
+}
+
 function deleteTask(e) {
 
     // We don't want to select a task that's being deleted 
@@ -400,10 +465,6 @@ function updateTasksInDB() {
 // store the database object
 let db;
 
-function initModals() {
-
-}
-
 window.onload = () =>  {
     let request = window.indexedDB.open("TodoApp_db", 1);
     
@@ -442,6 +503,8 @@ window.onload = () =>  {
     addGroupButton.removeAttribute('disabled');
     addTaskButton.removeAttribute('disabled');
     saveDataButton.addEventListener('click', exportJSON);
+    loadDataButton.addEventListener('click', displayImportModal);   
+    importConfirmButton.addEventListener('click', importFromJSON);
     document.addEventListener('keydown', handleShortcuts);
 
     modalCloseButton.forEach(button => {
@@ -465,6 +528,11 @@ let LIST_UP = "k";
 let TOGGLE_SIDEBAR = "e";
 
 function handleShortcuts(e) {
+    
+    // In order not to intercetp input directed at text boxes for example
+    if (e.target != document.body) {
+        return
+    }
 
     if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
         e.preventDefault();
