@@ -238,13 +238,11 @@ function processData() {
             }
             // if there are no more cursor items to iterate through, say so
             console.log('All groups displayed');
+            // select last inserted group
+            if(groupsList.lastChild) {
+                groupsList.lastChild.click();
+            }
         }
-        
-        // select last inserted group
-        if(groupsList.lastChild) {
-            groupsList.lastChild.click();
-        }
-
     };
 }
 
