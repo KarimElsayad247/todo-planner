@@ -501,14 +501,9 @@ window.onload = () =>  {
         console.log('Database setup complete');
     };
     
-    addGroupButton.addEventListener('click', addGroup);
-    addTaskButton.addEventListener('click', addTask);
-    addGroupButton.removeAttribute('disabled');
-    addTaskButton.removeAttribute('disabled');
-    saveDataButton.addEventListener('click', exportJSON);
-    loadDataButton.addEventListener('click', displayImportModal);   
-    importConfirmButton.addEventListener('click', importFromJSON);
-    document.addEventListener('keydown', handleShortcuts);
+    populateShortcutsModal();
+    registerEventListeners();
+
 
     modalCloseButton.forEach(button => {
         button.onclick = e => {
@@ -517,6 +512,21 @@ window.onload = () =>  {
         }
     })
 
+}
+
+function populateShortcutsModal() {
+
+}
+
+function registerEventListeners() {
+    addGroupButton.addEventListener('click', addGroup);
+    addTaskButton.addEventListener('click', addTask);
+    addGroupButton.removeAttribute('disabled');
+    addTaskButton.removeAttribute('disabled');
+    saveDataButton.addEventListener('click', exportJSON);
+    loadDataButton.addEventListener('click', displayImportModal);   
+    importConfirmButton.addEventListener('click', importFromJSON);
+    document.addEventListener('keydown', handleShortcuts);
 }
 
 const ADD_GROUP_KEY = "A";
