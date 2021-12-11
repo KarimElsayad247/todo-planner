@@ -1,13 +1,17 @@
-let addGroupButton = document.querySelector("#add-group-button");
-let addTaskButton = document.querySelector("#add-task-button");
-let groupsList = document.querySelector(".groups");
-let tasksList = document.querySelector("#todo-list");
-let saveDataButton = document.querySelector('#save-data-button')
-let loadDataButton = document.querySelector('#load-data-button');
-let exportModal = document.querySelector("#export-modal");
-let importModal = document.querySelector("#import-modal");
-let importConfirmButton = document.querySelector("#import-json-text");
-let modalCloseButton = document.querySelectorAll(".modal-exit-button");
+const addGroupButton = document.querySelector("#add-group-button");
+const addTaskButton = document.querySelector("#add-task-button");
+const groupsList = document.querySelector(".groups");
+const tasksList = document.querySelector("#todo-list");
+const saveDataButton = document.querySelector('#save-data-button')
+const loadDataButton = document.querySelector('#load-data-button');
+const exportModal = document.querySelector("#export-modal");
+const importModal = document.querySelector("#import-modal");
+const importConfirmButton = document.querySelector("#import-json-text");
+const shortcutsModal = document.querySelector('#shortcuts-modal');
+const modalCloseButton = document.querySelectorAll(".modal-exit-button");
+
+const MODALS = [exportModal, importModal];
+const arrows = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
 
 let currentGroupId;
 let currentSelectedGroup;
@@ -543,13 +547,16 @@ let shortcuts = {
 function handleShortcuts(e) {
     
     // In order not to intercetp input directed at text boxes for example
-    if (e.target != document.body) {
+    if (isModal(e.target)) {
+        // handleModalShortcuts(e);
         return
     }
 
-    if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
-        e.preventDefault();
-    }
+    if (e.key in shortcuts || isArrow(e.key)) e.preventDefault();
+
+    // if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
+    //     e.preventDefault();
+    // }
 
     if (e.key == shortcuts.ADD_GROUP_KEY) {
         addGroup();
@@ -604,7 +611,7 @@ function handleShortcuts(e) {
             active.querySelector("input").click();
         }
     }
-    else if (e.key == "ArrowDown" || e.key == LIST_DOWN) {
+    else if (e.key == "ArrowDown" || e.key == shortcuts.LIST_DOWN) {
         let active = document.activeElement;
         if (active.nextElementSibling) {
             active.nextElementSibling.focus();
@@ -613,7 +620,7 @@ function handleShortcuts(e) {
             active.parentElement.firstElementChild.focus();
         }
     }
-    else if (e.key == "ArrowUp" || e.key == LIST_UP) {
+    else if (e.key == "ArrowUp" || e.key == shortcuts.LIST_UP) {
         let active = document.activeElement;
         if (active.previousElementSibling) {
             active.previousElementSibling.focus();
@@ -625,4 +632,20 @@ function handleShortcuts(e) {
     else {
         console.log(e);
     }
+}
+
+function handleModalShortcuts(e) {
+    
+}
+
+function isModal(element) {
+    MODALS.forEach( modal => {
+        if (modal.contains(element)) return true;
+    })
+    return false;
+}
+
+function isArrow(key) {
+    if (arrows.includes(key)) return true;
+    return false;
 }
