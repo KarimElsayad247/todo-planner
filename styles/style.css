@@ -202,11 +202,11 @@ code {
 }
 
 .side-bar.hidden {
-    display: none !important;
+    display: none;
 }
 
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 @media (max-width: 500px) {
