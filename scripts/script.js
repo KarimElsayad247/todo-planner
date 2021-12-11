@@ -514,7 +514,20 @@ window.onload = () =>  {
 }
 
 function populateShortcutsModal() {
-
+    for (const shortcut in shortcuts) {
+        const listItem = document.createElement("li");
+        listItem.classList.add("shortcut-list-item");
+        const key = document.createElement("code");
+        key.classList.add("shortcut-key");
+        key.textContent = shortcuts[shortcut].key;
+        const description = document.createElement("p");
+        description.classList.add("shortcut-description");
+        description.textContent = shortcuts[shortcut].description;
+        listItem.appendChild(key);
+        listItem.appendChild(description);
+        shortcutsPairsList.appendChild(listItem);
+        // console.log(`${key.textContent}: ${description.textContent}`)
+    }
 }
 
 function registerEventListeners() {
