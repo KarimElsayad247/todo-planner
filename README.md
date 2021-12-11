@@ -6,16 +6,8 @@ It also doubles as good IndexedDB practice.
 
 ## Todo:
 
-### Currently
-
 * Subtasks (and subtasks for the subtasks!)
   * Indent level for each level
   * selecting task collapses children
 
 * Responsive design for mobile 
-
-### When Aquired by big corp:
-
-* Cloud sync support for over-priced enterprise endition
-
-* Landing page (We can Boost your productivity 30000%)
