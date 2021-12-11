@@ -10,6 +10,8 @@ const importConfirmButton = document.querySelector("#import-json-text");
 const shortcutsModal = document.querySelector('#shortcuts-modal');
 const modalCloseButton = document.querySelectorAll(".modal-exit-button");
 
+const activeGroupNameBox = document.querySelector("#active-group-name");
+
 const MODALS = [exportModal, importModal];
 const arrows = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
 
@@ -25,9 +27,7 @@ function exportJSON() {
 }
 
 function importFromJSON() {
-    let jsonString = document.querySelector("#data-input").value;
-
-    console.log(jsonString)
+    const jsonString = document.querySelector("#data-input").value;
 
     // if user clicks cancel, abort creation
     if (jsonString == null) {
@@ -39,7 +39,7 @@ function importFromJSON() {
     }
 
     try {
-        let object = JSON.parse(jsonString);
+        const object = JSON.parse(jsonString);
         data = object;
     } catch (e) {
         alert("Invalid json object");
@@ -61,8 +61,7 @@ function populateTasks() {
     }
     
     // display name of active group
-    let nameBox = document.querySelector("#active-group-name");
-    nameBox.textContent = data[currentGroupId].name; 
+    activeGroupNameBox.textContent = data[currentGroupId].name; 
 
     // unique message when there are no tasks
     if (data[currentGroupId].tasks.length === 0) {
@@ -120,10 +119,10 @@ function populateTasks() {
         deleteBtn.onclick = deleteTask;
         
         // Divs for styling puposes
-        let leftHand = document.createElement('div')
+        const leftHand = document.createElement('div')
         leftHand.classList.add("task-left-side");
 
-        let rightHand = document.createElement('div')
+        const rightHand = document.createElement('div')
         rightHand.classList.add("task-right-side");
 
 
@@ -145,7 +144,7 @@ function selectTask(e) {
 }
 
 function selectGroup(e) {
-    let group = e.target;
+    const group = e.target;
 
     // do nothing if we're selecting currently selected group
     if (currentSelectedGroup === group) {
@@ -210,7 +209,7 @@ function processData() {
 
     // Open our object store and then get a cursor - which iterates through all the
     // different data items in the store
-    let objectStore = db.transaction('TodoApp_os').objectStore('TodoApp_os');
+    const objectStore = db.transaction('TodoApp_os').objectStore('TodoApp_os');
 
     objectStore.openCursor().onsuccess = function(e) {
         // Get a reference to the cursor
@@ -392,14 +391,14 @@ function deleteTask(e) {
     e.stopPropagation();
 
     // confirm if user wants to delete
-    let check = confirm("Are you sure you want to delete this task?");
+    const check = confirm("Are you sure you want to delete this task?");
     
     if (check == false) {
         return;
     }
 
     // get the task index attribute from parent list item
-    let taskIndex = e.target.closest('li').getAttribute("task-index");
+    const taskIndex = e.target.closest('li').getAttribute("task-index");
 
     // remove task from array
     data[currentGroupId].tasks.splice(taskIndex, 1);
@@ -418,13 +417,13 @@ function addTask() {
         return -1;
     }
 
-    let taskText = prompt("Task:");
+    const taskText = prompt("Task:");
 
     if (taskText === null) {
         return;
     }
 
-    let newTask = {
+    const newTask = {
         text: taskText,
         status: "unfinished"
     };
@@ -470,7 +469,7 @@ function updateTasksInDB() {
 let db;
 
 window.onload = () =>  {
-    let request = window.indexedDB.open("TodoApp_db", 1);
+    const request = window.indexedDB.open("TodoApp_db", 1);
     
     // onerror handler signifies that the database didn't open successfully
     request.onerror = function() {
@@ -493,7 +492,7 @@ window.onload = () =>  {
     
         // Create an objectStore to store our gorups in
         // including a auto-incrementing key
-        let objectStore = db.createObjectStore('TodoApp_os', { keyPath: 'id', autoIncrement:true });
+        const objectStore = db.createObjectStore('TodoApp_os', { keyPath: 'id', autoIncrement:true });
     
         // Define what data items the objectStore will contain
         objectStore.createIndex('group', 'group', { unique: false });
@@ -520,16 +519,16 @@ window.onload = () =>  {
 
 }
 
-let ADD_GROUP_KEY = "A";
-let ADD_TASK_KEY = "a";
-let FOCUS_DELETE = "d";
-let FOCUS_GROUPS = "g";
-let FOCUS_TASKS = "t";
-let SELECT = "Enter";
-let CHECK = " ";
-let LIST_DOWN = "j";
-let LIST_UP = "k";
-let TOGGLE_SIDEBAR = "e";
+const ADD_GROUP_KEY = "A";
+const ADD_TASK_KEY = "a";
+const FOCUS_DELETE = "d";
+const FOCUS_GROUPS = "g";
+const FOCUS_TASKS = "t";
+const SELECT = "Enter";
+const CHECK = " ";
+const LIST_DOWN = "j";
+const LIST_UP = "k";
+const TOGGLE_SIDEBAR = "e";
 
 let shortcuts = {
     "ADD_GROUP_KEY": ADD_GROUP_KEY,
