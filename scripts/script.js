@@ -8,6 +8,7 @@ const exportModal = document.querySelector("#export-modal");
 const importModal = document.querySelector("#import-modal");
 const importConfirmButton = document.querySelector("#import-json-text");
 const shortcutsModal = document.querySelector('#shortcuts-modal');
+const shortcutsPairsList = document.querySelector("#shortcuts-pairs-list");
 const modalCloseButton = document.querySelectorAll(".modal-exit-button");
 
 const activeGroupNameBox = document.querySelector("#active-group-name");
@@ -542,17 +543,17 @@ const TOGGLE_SIDEBAR = "e";
 const TOGGLE_SHORTCUTS_MODAL = "?";
 
 let shortcuts = {
-    "ADD_GROUP_KEY": ADD_GROUP_KEY,
-    "ADD_TASK_KEY": ADD_TASK_KEY,
-    "FOCUS_DELETE": FOCUS_DELETE,
-    "FOCUS_GROUPS": FOCUS_GROUPS,
-    "FOCUS_TASKS": FOCUS_TASKS,
-    "SELECT": SELECT,
-    "CHECK": CHECK,
-    "LIST_DOWN": LIST_DOWN,
-    "LIST_UP": LIST_UP,
-    "TOGGLE_SIDEBAR": TOGGLE_SIDEBAR,
-    "TOGGLE_SHORTCUTS_MODAL": TOGGLE_SHORTCUTS_MODAL,
+    "ADD_GROUP_KEY": {"key": ADD_GROUP_KEY, "description": "Add a new Group"},
+    "ADD_TASK_KEY": {"key": ADD_TASK_KEY, "description": "Add a new task"},
+    "FOCUS_DELETE": {"key": FOCUS_DELETE, "description": "Focus on delete button in selected element"},
+    "FOCUS_GROUPS": {"key": FOCUS_GROUPS, "description": "Focus on current group in groups list"},
+    "FOCUS_TASKS": {"key": FOCUS_TASKS, "description": "Focus on first task in tasks list"},
+    "SELECT": {"key": SELECT, "description": "Switch to focused group"},
+    "CHECK": {"key": CHECK, "description": "toggle status of focused task (Finished/Unfinished)"},
+    "LIST_DOWN": {"key": LIST_DOWN, "description": "Focus on next element in a list (Task/Group)"},
+    "LIST_UP": {"key": LIST_UP, "description": "Focus on previous element in a list (Task/Group)"},
+    "TOGGLE_SIDEBAR": {"key": TOGGLE_SIDEBAR, "description": "Toggle sidebar visibility"},
+    "TOGGLE_SHORTCUTS_MODAL": {"key": TOGGLE_SHORTCUTS_MODAL, "description": "View/Hide this help"},
 }
 
 function handleShortcuts(e) {
@@ -564,18 +565,18 @@ function handleShortcuts(e) {
     }
 
     if (e.key in shortcuts || isArrow(e.key)) e.preventDefault();
-
+    if (e.keyCode == 32) e.preventDefault();
     // if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
     //     e.preventDefault();
     // }
 
-    if (e.key == shortcuts.ADD_GROUP_KEY) {
+    if (e.key == shortcuts.ADD_GROUP_KEY.key) {
         addGroup();
     }
-    else if (e.key == shortcuts.ADD_TASK_KEY) {
+    else if (e.key == shortcuts.ADD_TASK_KEY.key) {
         addTask();
     }
-    else if (e.key == shortcuts.FOCUS_DELETE) {
+    else if (e.key == shortcuts.FOCUS_DELETE.key) {
         // select delete button if focus on group
         let active = document.activeElement;
         if (active.classList.contains("group")) {
@@ -587,7 +588,7 @@ function handleShortcuts(e) {
             delButton.focus();   
         }
     }
-    else if (e.key == shortcuts.FOCUS_GROUPS) {
+    else if (e.key == shortcuts.FOCUS_GROUPS.key) {
         let currentGroupElement = document.querySelector(`[data-group-id="${currentGroupId}"]`)
         if (currentGroupElement) {
             currentGroupElement.focus()
@@ -599,33 +600,33 @@ function handleShortcuts(e) {
             }
         }
     }
-    else if (e.key == shortcuts.FOCUS_TASKS) {
+    else if (e.key == shortcuts.FOCUS_TASKS.key) {
         let first = tasksList.firstElementChild;
         if (first != null) {
             first.focus();
         }
     }
-    else if (e.key == shortcuts.TOGGLE_SIDEBAR) {
+    else if (e.key == shortcuts.TOGGLE_SIDEBAR.key) {
         let sidebar = document.querySelector(".side-bar");
         sidebar.classList.toggle("hidden"); 
     }
-    else if (e.key == shortcuts.TOGGLE_SHORTCUTS_MODAL) {
+    else if (e.key == shortcuts.TOGGLE_SHORTCUTS_MODAL.key) {
         toggleShortcutsModal();
     }
-    else if (e.key == shortcuts.SELECT) {
+    else if (e.key == shortcuts.SELECT.key) {
         const active = document.activeElement;
         if (active.classList.contains("group")) {
             let event = {target: active};
             selectGroup(event);
         }
     }
-    else if (e.key == shortcuts.CHECK) {
+    else if (e.key == shortcuts.CHECK.key) {
         const active = document.activeElement;
         if (active.classList.contains("task")) {
             active.querySelector("input").click();
         }
     }
-    else if (e.key == "ArrowDown" || e.key == shortcuts.LIST_DOWN) {
+    else if (e.key == "ArrowDown" || e.key == shortcuts.LIST_DOWN.key) {
         let active = document.activeElement;
         if (active.nextElementSibling) {
             active.nextElementSibling.focus();
@@ -634,7 +635,7 @@ function handleShortcuts(e) {
             active.parentElement.firstElementChild.focus();
         }
     }
-    else if (e.key == "ArrowUp" || e.key == shortcuts.LIST_UP) {
+    else if (e.key == "ArrowUp" || e.key == shortcuts.LIST_UP.key) {
         let active = document.activeElement;
         if (active.previousElementSibling) {
             active.previousElementSibling.focus();
