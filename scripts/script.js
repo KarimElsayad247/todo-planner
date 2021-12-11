@@ -23,7 +23,7 @@ let data = {};
 function exportJSON() {
     let dataText = JSON.stringify(data);
     exportModal.querySelector(".text-content").textContent = dataText;
-    exportModal.style.display = "flex";
+    exportModal.classList.toggle("hidden");
 }
 
 function importFromJSON() {
@@ -50,7 +50,7 @@ function importFromJSON() {
 }
 
 function displayImportModal() {
-    importModal.style.display = "flex";
+    importModal.classList.toggle("hidden");
 }
 
 function populateTasks() {
@@ -513,7 +513,7 @@ window.onload = () =>  {
     modalCloseButton.forEach(button => {
         button.onclick = e => {
             // hide the modal by changin display prop to none
-            e.target.parentElement.parentElement.style.display = "none";
+            e.target.parentElement.parentElement.classList.toggle("hidden");
         }
     })
 
@@ -529,6 +529,7 @@ const CHECK = " ";
 const LIST_DOWN = "j";
 const LIST_UP = "k";
 const TOGGLE_SIDEBAR = "e";
+const TOGGLE_SHORTCUTS_MODAL = "?";
 
 let shortcuts = {
     "ADD_GROUP_KEY": ADD_GROUP_KEY,
@@ -541,6 +542,7 @@ let shortcuts = {
     "LIST_DOWN": LIST_DOWN,
     "LIST_UP": LIST_UP,
     "TOGGLE_SIDEBAR": TOGGLE_SIDEBAR,
+    "TOGGLE_SHORTCUTS_MODAL": TOGGLE_SHORTCUTS_MODAL,
 }
 
 function handleShortcuts(e) {
@@ -597,6 +599,9 @@ function handleShortcuts(e) {
         let sidebar = document.querySelector(".side-bar");
         sidebar.classList.toggle("hidden"); 
     }
+    else if (e.key == shortcuts.TOGGLE_SHORTCUTS_MODAL) {
+        toggleShortcutsModal();
+    }
     else if (e.key == shortcuts.SELECT) {
         const active = document.activeElement;
         if (active.classList.contains("group")) {
@@ -647,4 +652,8 @@ function isModal(element) {
 function isArrow(key) {
     if (arrows.includes(key)) return true;
     return false;
+}
+
+function toggleShortcutsModal() {
+    shortcutsModal.classList.toggle("hidden");
 }
