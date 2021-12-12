@@ -1,3 +1,4 @@
+// Varius DOM elements used for manipulating the dynamic content
 const addGroupButton = document.querySelector("#add-group-button");
 const addTaskButton = document.querySelector("#add-task-button");
 const groupsList = document.querySelector(".groups");
@@ -11,11 +12,13 @@ const shortcutsModal = document.querySelector('#shortcuts-modal');
 const shortcutsPairsList = document.querySelector("#shortcuts-pairs-list");
 const modalCloseButton = document.querySelectorAll(".modal-exit-button");
 
-const activeGroupNameBox = document.querySelector("#active-group-name");
 
 const MODALS = [exportModal, importModal];
 const arrows = ["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft"];
 
+// These variables relate to the Group displaying a list of tasks
+// at a particular moment
+const activeGroupNameBox = document.querySelector("#active-group-name");
 let currentGroupId;
 let currentSelectedGroup;
 
@@ -54,6 +57,8 @@ function displayImportModal() {
     importModal.classList.toggle("hidden");
 }
 
+// TODO: extract task elements creation into a seperate function
+// populate tasks should be concerned only with putting tasks in the right spot
 function populateTasks() {
 
     // first, remove all tasks visible
@@ -166,6 +171,8 @@ function selectGroup(e) {
     console.log("focusing", currentGroupId);
 }
 
+// TODO: change function arguments to take the required values
+// instead of the cursor object
 function createAndAppendGroupListItem(cursor) {
 
     // Create a list iteand append it inside the list
@@ -199,6 +206,9 @@ function createAndAppendTaksListItem() {
 
 }
 
+// TODO: Function should only fill the data dictionary.
+// It should not be concerned with populating the groups list.
+// All code interacting with groupsList should be moved into a seperate function
 function processData() {
 
     // empty the contents of the list element each time the display is updated
@@ -284,7 +294,8 @@ function deleteGroup(e) {
         delete data[groupId];
         console.log('Group ' + groupId + ' deleted.');
 
-        processData();
+        processData();  // TODO: call populateGroups function that will be  
+                        // created later. No need to read everything from DB again
     };
 
     // report if there was an error in transaction
@@ -321,7 +332,11 @@ function addGroup() {
     transaction.oncomplete = function() {
         console.log('Transaction completed: database modification finished.');
 
-        // update the display of data to show the newly added item, by running displayData() again.
+        // TODO:
+        // update the display of data to show the newly added item
+        // If the intent to display data groupsList modification, then
+        // reading from DB again is an absolute waste of time
+        // IDEA: reflect newly added group in data dictionary, then 
         processData();
     };
 
@@ -351,6 +366,7 @@ function clearAndFillDB() {
     };
 }
 
+// The intent is to assume data dictionary has been modified elsewhere
 function fillDataBaseFromDataObject() {
     let id = 1;
     for (const groupID in data) {
@@ -541,6 +557,7 @@ function registerEventListeners() {
     document.addEventListener('keydown', handleShortcuts);
 }
 
+// These constants mark the default shortcuts configuration. 
 const ADD_GROUP_KEY = "A";
 const ADD_TASK_KEY = "a";
 const FOCUS_DELETE = "d";
@@ -577,9 +594,6 @@ function handleShortcuts(e) {
 
     if (e.key in shortcuts || isArrow(e.key)) e.preventDefault();
     if (e.keyCode == 32) e.preventDefault();
-    // if (!e.key.match(/[fF][0-9]{1,2}|Tab|Page/)) {
-    //     e.preventDefault();
-    // }
 
     if (e.key == shortcuts.ADD_GROUP_KEY.key) {
         addGroup();
