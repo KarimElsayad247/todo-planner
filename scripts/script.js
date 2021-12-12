@@ -57,7 +57,6 @@ function displayImportModal() {
     importModal.classList.toggle("hidden");
 }
 
-// TODO: extract task elements creation into a seperate function
 // populate tasks should be concerned only with putting tasks in the right spot
 function populateTasks() {
 
@@ -80,69 +79,73 @@ function populateTasks() {
     data[currentGroupId].tasks.forEach(task => {
         
         // create a list item that will contain task
-        const listItem = document.createElement('li');
-        listItem.classList.add("task");
-        listItem.tabIndex = 0;
-        listItem.setAttribute("task-index", i);
-
-        const taskID = `group-${currentGroupId}-task-${i}`;
-
-        const label = document.createElement('label');
-        label.for = taskID;
-        label.name = taskID;
-        label.textContent = task.text;
-
-        const input = document.createElement('input');
-        input.type = "checkbox";
-        input.id = taskID;
-        input.name = taskID;
-        input.tabIndex = -1;
-        input.addEventListener('change', (e) => {
-            listItem.classList.toggle("finished");
-            if (e.target.checked) {
-                task.status = "finished";
-            }
-            else {
-                task.status = "unfinished";
-            }
-            updateTasksInDB();
-        });
-
-        if (task.status === "finished") {
-            input.setAttribute("checked", "");
-            listItem.classList.add("finished");
-        }
-
-        // Create a button and place it inside each listItem
-        const deleteBtn = document.createElement('button');
-        deleteBtn.classList.add("delete-btn");
-        deleteBtn.textContent = 'Delete';
-        deleteBtn.tabIndex = -1; // I only want to focus on button by shortcut
-        
-        
-        // Set an event handler so that when the button is clicked, the deleteItem()
-        // function is run
-        deleteBtn.onclick = deleteTask;
-        
-        // Divs for styling puposes
-        const leftHand = document.createElement('div')
-        leftHand.classList.add("task-left-side");
-
-        const rightHand = document.createElement('div')
-        rightHand.classList.add("task-right-side");
-
-
+        const { leftHand, input, label, rightHand, deleteBtn, listItem } = createTaskElements(i, task);
         leftHand.appendChild(input);
         leftHand.appendChild(label);
         rightHand.appendChild(deleteBtn);
         listItem.appendChild(leftHand);
         listItem.appendChild(rightHand);
         listItem.addEventListener('click', selectTask);
-        
         tasksList.appendChild(listItem);
 
         i++;
     });
+}
+
+function createTaskElements(i, task) {
+    const listItem = document.createElement('li');
+    listItem.classList.add("task");
+    listItem.tabIndex = 0;
+    listItem.setAttribute("task-index", i);
+
+    const taskID = `group-${currentGroupId}-task-${i}`;
+
+    const label = document.createElement('label');
+    label.for = taskID;
+    label.name = taskID;
+    label.textContent = task.text;
+
+    const input = document.createElement('input');
+    input.type = "checkbox";
+    input.id = taskID;
+    input.name = taskID;
+    input.tabIndex = -1;
+    input.addEventListener('change', (e) => {
+        listItem.classList.toggle("finished");
+        if (e.target.checked) {
+            task.status = "finished";
+        }
+        else {
+            task.status = "unfinished";
+        }
+        updateTasksInDB();
+    });
+
+    if (task.status === "finished") {
+        input.setAttribute("checked", "");
+        listItem.classList.add("finished");
+    }
+
+    // Create a button and place it inside each listItem
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.tabIndex = -1; // I only want to focus on button by shortcut
+
+
+
+
+    // Set an event handler so that when the button is clicked, the deleteItem()
+    // function is run
+    deleteBtn.onclick = deleteTask;
+
+    // Divs for styling puposes
+    const leftHand = document.createElement('div');
+    leftHand.classList.add("task-left-side");
+
+    const rightHand = document.createElement('div');
+    rightHand.classList.add("task-right-side");
+    return { leftHand, input, label, rightHand, deleteBtn, listItem };
 }
 
 function selectTask(e) {
