@@ -176,7 +176,7 @@ function selectGroup(e) {
 
 // TODO: change function arguments to take the required values
 // instead of the cursor object
-function createAndAppendGroupListItem(cursor) {
+function createAndAppendGroupListItem(groupID, groupName) {
 
     // Create a list iteand append it inside the list
     const listItem = document.createElement('li');
@@ -185,11 +185,11 @@ function createAndAppendGroupListItem(cursor) {
     groupsList.appendChild(listItem);
 
     // Put the data from the cursor inside the item
-    listItem.textContent = cursor.value.group;
+    listItem.textContent = groupName;
 
     // Store the ID of the data item inside an attribute on the listItem, so we know
     // which item it corresponds to. This will be useful later when we want to delete items
-    listItem.setAttribute('data-group-id', cursor.value.id);
+    listItem.setAttribute('data-group-id', groupID);
 
     // Create a button and place it inside each listItem
     const deleteBtn = document.createElement('button');
@@ -237,7 +237,7 @@ function processData() {
                 tasks: cursor.value.tasks
             };
             
-            createAndAppendGroupListItem(cursor);
+            createAndAppendGroupListItem(cursor.value.id, cursor.value.group);
             
             // Iterate to the next item in the cursor
             cursor.continue();
