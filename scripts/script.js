@@ -174,8 +174,8 @@ function selectGroup(e) {
     console.log("focusing", currentGroupId);
 }
 
-// TODO: change function arguments to take the required values
-// instead of the cursor object
+// TODO: split function into create function and append function,
+// each of which will be called from processData and possibly others
 function createAndAppendGroupListItem(groupID, groupName) {
 
     // Create a list iteand append it inside the list
