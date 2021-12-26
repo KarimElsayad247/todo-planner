@@ -14,6 +14,7 @@ body {
     height: 100vh;
     background-color: #FFF;
     overflow-y: hidden;
+    
 }
 
 button {
@@ -97,6 +98,7 @@ code {
 
 .scroll {
     overflow-y: auto;
+    scroll-behavior: smooth;
 }
 
 .group, .task {
