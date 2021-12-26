@@ -11,8 +11,9 @@ li {
 
 body {
     display: flex;
-    min-height: 100vh;
+    height: 100vh;
     background-color: #FFF;
+    overflow-y: hidden;
 }
 
 button {
@@ -21,6 +22,7 @@ button {
     background-color: #3182c9;
     color: white;
     padding: 8px 16px;
+    margin-left: 1remz;
     border-radius: 0px;
     border-style: solid;
     border-color: #000;
@@ -36,18 +38,52 @@ button:hover, button:focus-visible   {
     transition: background-color 0.05s;
 }
 
+.delete-btn {
+    margin-left: 1rem;
+}
+
 code {
     background-color: #eee;
     border: 1px solid #999;
     display: block;
     padding: 3px;
-  }
+}
 
 .side-bar {
     width: 22em;
+    display: flex;
+    flex-direction: column;
     background-color: #F5F5F5;
-    box-shadow: 0px 0px 8px ;
+    box-shadow: 0px 0px 8px;
     flex: 0 0 auto;
+}
+
+.content {
+    display: flex;    
+    flex-direction: column;
+    width: 100%;
+}
+
+.tool-bar {
+    padding: 1.2rem 0;
+    display: flex;
+    align-items: center;
+    background-color: #F5F5F5;
+    border-bottom: 2px solid black;
+    box-shadow: 4px 16px 16px -16px rgba(0, 0, 0, 1);
+}
+
+#groups-tool-bar {
+    border-bottom: 2px solid black;
+    padding-left: 20px;
+    padding-right: 20px;
+    justify-content: space-between;
+}
+
+#tasks-tool-bar {
+    justify-content: space-between;
+    padding-right: 5rem;
+    padding-left: 4rem;
 }
 
 .groups {
@@ -55,8 +91,12 @@ code {
 }
 
 #todo-list {
-    padding-top: 10px;
-    padding-bottom: 40px;
+    padding: 10px 4rem 40px 20px;
+    padding-left: 4rem;
+}
+
+.scroll {
+    overflow-y: auto;
 }
 
 .group, .task {
@@ -69,6 +109,7 @@ code {
     border: 1px solid rgb(150, 145, 145);
     border-radius: 0px;
     box-shadow: 0 0 16px rgba(100, 100, 100, 0.5);
+    
 }
 
 #active-group-name {
@@ -105,28 +146,7 @@ code {
 }
 
 
-.tool-bar {
-    padding: 10px 0px;
-    display: flex;
-}
 
-#groups-tool-bar {
-    border-bottom: 2px solid black;
-    padding-left: 20px;
-    padding-right: 20px;
-    justify-content: space-between;
-}
-
-#tasks-tool-bar {
-    justify-content: space-between;
-}
-
-.content {
-    display: flex;    
-    flex-direction: column;
-    width: 100%;
-    padding: 0 80px;
-}
 
 
 .task-left-side {
@@ -209,6 +229,7 @@ code {
 .hidden {
     display: none !important;
 }
+
 
 @media (max-width: 500px) {
 
