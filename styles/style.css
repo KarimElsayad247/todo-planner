@@ -116,6 +116,14 @@ code {
     font-size: 1.6rem;
 }
 
+.no-groups-message {
+    background-color: rgb(50, 50, 145);
+    color: white;
+    padding: 1rem;
+    font-size: larger;
+}
+
+
 .task.finished {
     background-color: rgba(150, 255, 150, 0.5);
 }

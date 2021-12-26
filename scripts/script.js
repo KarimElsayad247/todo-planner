@@ -246,7 +246,8 @@ function processData() {
             // Again, if list item is empty, display a 'No groups stored' message
             if(!groupsList.firstChild) {
                 const listItem = document.createElement('li');
-                listItem.textContent = 'No Groups';
+                listItem.classList.add('no-groups-message')
+                listItem.textContent = "No Groups (press '?' to view all shortcuts)";
                 groupsList.appendChild(listItem);
             }
             // if there are no more cursor items to iterate through, say so
